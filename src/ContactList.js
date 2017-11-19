@@ -2,20 +2,13 @@ import React, {Component} from 'react';
 import Contact from './Contact';
 import "./ContactList.css";
 
-import type {Node, Element} from 'react';
-import type {ContactData} from './Contact';
+import type {Element} from 'react';
+import type {ContactData, ContactArray} from './ContactTypes';
 
-export type ContactArray = Array<ContactData>;
+class ContactList extends Component<*, *> {
+    props: { contacts: ContactArray, };
+    state: { query: string, };
 
-export type Props = {
-    contacts: ContactArray,
-};
-
-export type State = {
-    query: string,
-};
-
-class ContactList extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {query: ""};
@@ -33,7 +26,7 @@ class ContactList extends Component<Props, State> {
         email = email.toLowerCase();
         return (name.includes(query) || email.includes(query));
     }
-    
+
     render(): Element<'div'> {
         const {contacts: origin_contacts} = this.props;
         const {query} = this.state;
@@ -56,7 +49,7 @@ class ContactList extends Component<Props, State> {
                 <ol className='contact-list'>
                     {contacts
                      .map((contact: ContactData, i: number): Element<'li'> => (
-                         <li key={contact && contact.id || i} className='contact-list-item'>
+                         <li key={contact.id} className='contact-list-item'>
                              <Contact contact={contact}/>
                          </li>
                      ))}
@@ -66,4 +59,8 @@ class ContactList extends Component<Props, State> {
     }
 }
 
+export type Props = $PropertyType<ContactList, "props">;
+export type State = $PropertyType<ContactList, "state">;
+
 export default ContactList;
+

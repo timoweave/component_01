@@ -4,9 +4,6 @@
   "private": true,
   "dependencies": {
     "fetch": "^1.1.0",
-    "flow": "^0.2.3",
-    "flow-bin": "^0.57.3",
-    "flow-typed": "^2.2.3",
     "isomorphic-fetch": "^2.2.1",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
@@ -14,7 +11,8 @@
     "react-scripts": "1.0.14"
   },
   "scripts": {
-    "flow-server": "flow stop && flow server",
+    "host_docker": "docker run -dit --rm -p 8080:8080 --name node -v ${PWD}:${PWD} -w ${PWD} node bash",
+    "flow_server": "flow stop && flow server",
     "flow": "flow status",
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -22,6 +20,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "flow": "^0.2.3",
+    "flow-typed": "^2.2.3",
     "flow-bin": "^0.57.3",
     "watch": "^1.0.2"
   }

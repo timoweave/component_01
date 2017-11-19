@@ -1,22 +1,13 @@
 import React, {Component} from 'react';
-import type {Element} from 'react';
 import './Contact.css';
 
-export type ContactData = {
-    id: string,
-    name: string,
-    email: string,
-    avatarURL: string,
-};
+import type {Element} from 'react';
+import type {ContactData} from './ContactTypes'
 
-export type Props = {
-    contact: ContactData,
-};
+export class Contact extends Component<*, *> {
+    props: { contact: ContactData, };
+    state: {| |};
 
-export type State = {
-};
-
-class Contact extends Component<Props, State> {
     render(): Element<'div'> {
         const {contact: {name, email, avatarURL}} = this.props;
         const styles = {backgroundImage: `url(${avatarURL})`};
@@ -33,8 +24,9 @@ class Contact extends Component<Props, State> {
     }
 }
 
+export type Props = $PropertyType<Contact, "props">;
+export type State = $PropertyType<Contact, "state">;
+
 export default Contact;
-
-
 
 

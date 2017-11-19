@@ -3,16 +3,12 @@ import ContactList from './ContactList';
 import "./App.css";
 
 import type {Element} from 'react';
-import type {ContactArray} from './ContactList';
+import type {ContactArray} from './ContactTypes';
 
-export type Props = {
-    contacts: ContactArray,
-};
+class App extends Component<*, *> {
+    props: { contacts: ContactArray, };
+    state: { };
 
-export type State = {
-};
-
-class App extends Component<Props, State> {
     render(): Element<'div'> {
         const {contacts} = this.props;
         return (
@@ -23,4 +19,10 @@ class App extends Component<Props, State> {
     }
 }
 
+export type Props = $PropertyType<App, "props">;
+export type State = $PropertyType<App, "state">;
+
 export default App;
+
+
+

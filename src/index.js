@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
 
-import type {ContactArray} from './ContactList';
+import type {ContactArray} from './ContactTypes';
 
 const contacts: ContactArray = [
     {
@@ -26,18 +26,16 @@ const contacts: ContactArray = [
     },
 ];
 
-function index() {
-    const root = (document.querySelector("#root"): ?HTMLElement);
-    
+function index(): void {
+    const root: ?HTMLElement = document.querySelector("#root");
+
     if ((root === null) ||
         (root === undefined) ||
         (root && !(root instanceof HTMLElement))) {
-        console.log({root, type: typeof root});
         throw new Error("Expected a 'root' identifier element.");
-    } else {
-        console.log({contacts});
-        ReactDOM.render(<App contacts={contacts}/>, root);
     }
+
+    ReactDOM.render(<App contacts={contacts}/>, root);
 }
 
 index();
