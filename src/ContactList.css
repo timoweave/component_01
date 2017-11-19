@@ -1,0 +1,44 @@
+
+.contact-list {
+    width: 100%;
+    margin: 0px;
+    padding: 0;
+    list-style-type: none;
+}
+
+.contact-list-item {
+    margin: 5px;    
+    padding: 5px;
+    background: white;
+}
+
+.contact-list-search {
+    margin: 0px;    
+    padding: 0 20px;    
+    background: white;
+    width: 100%;
+    border-width: 0px;
+    line-height: 46px;
+    font-size: 2em;
+    font-size: 700;        
+}
+
+.contact-list-search:focus {
+    outline: none;
+}
+
+.contact-list-info {
+    color: grey;
+    width: 100%;
+    margin: 0px;    
+    padding: 0px;
+    background: white;
+    text-align: center;
+}
+
+@media (min-width: 600px) {
+    .contact-list-item {
+        margin: 20px;
+        /* border-radius: 4px; */
+    }
+}

@@ -1,0 +1,14 @@
+[ignore]
+.*/node_modules/.*
+.*/src/registerServiceWorker.js
+.*/test/.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+all=true
+
