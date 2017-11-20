@@ -1,16 +1,30 @@
 import React, {Component} from 'react';
 import ContactList from './ContactList';
+import {getAll} from './ContactApi';
 import "./App.css";
 
 import type {Element} from 'react';
 import type {ContactArray} from './ContactTypes';
 
 class App extends Component<*, *> {
-    props: { contacts: ContactArray, };
-    state: { };
+    props: { };
+    
+    state: {
+        contacts: ContactArray,
+    } = {
+        contacts: [],
+    };
 
+    componentDidMount(): void {
+        getAll().then((contact_array) => {
+            this.setState({
+                contacts: contact_array,
+            });
+        })
+    }
+    
     render(): Element<'div'> {
-        const {contacts} = this.props;
+        const {contacts} = this.state;
         return (
             <div className="root">
                 <ContactList contacts={contacts}/>

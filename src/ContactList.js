@@ -3,10 +3,11 @@ import Contact from './Contact';
 import "./ContactList.css";
 
 import type {Element} from 'react';
-import type {ContactData, ContactArray} from './ContactTypes';
+import type {ContactItem, ContactArray} from './ContactTypes';
 
 class ContactList extends Component<*, *> {
     props: { contacts: ContactArray, };
+    
     state: { query: string, };
 
     constructor(props: Props) {
@@ -18,7 +19,7 @@ class ContactList extends Component<*, *> {
         this.setState({query: event.target.value});
     }
 
-    match = (contact: ContactData): boolean => {
+    match = (contact: ContactItem): boolean => {
         let {query} = this.state;
         let {name, email} = contact;
         query = query.toLowerCase();
@@ -48,7 +49,7 @@ class ContactList extends Component<*, *> {
                 </ol>
                 <ol className='contact-list'>
                     {contacts
-                     .map((contact: ContactData, i: number): Element<'li'> => (
+                     .map((contact: ContactItem, i: number): Element<'li'> => (
                          <li key={contact.id} className='contact-list-item'>
                              <Contact contact={contact}/>
                          </li>

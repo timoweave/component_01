@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import './Contact.css';
 
 import type {Element} from 'react';
-import type {ContactData} from './ContactTypes'
+import type {ContactItem} from './ContactTypes'
 
 export class Contact extends Component<*, *> {
-    props: { contact: ContactData, };
+    props: { contact: ContactItem, };
+    
     state: {| |};
 
     render(): Element<'div'> {
