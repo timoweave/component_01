@@ -2,15 +2,21 @@ import React, {Component} from 'react';
 import './Contact.css';
 
 import type {Element} from 'react';
-import type {ContactItem} from './ContactTypes'
+import type {ContactItem, ContactCall} from './ContactTypes'
 
-export class Contact extends Component<*, *> {
-    props: { contact: ContactItem, };
-    
-    state: {| |};
+export type Props = {
+    contact: ContactItem,
+    del: ContactCall,
+};
 
+export type State = {|
+|};
+
+export class Contact extends Component<Props, State> {
     render(): Element<'div'> {
-        const {contact: {name, email, avatarURL}} = this.props;
+        const {contact} = this.props;
+        const {name, email, avatarURL} = contact;
+        const {del} = this.props;
         const styles = {backgroundImage: `url(${avatarURL})`};
         return (
             <div className='contact'>
@@ -19,14 +25,13 @@ export class Contact extends Component<*, *> {
                     <p>{name}</p>
                     <p>{email}</p>
                 </div>
-                <button className='contact-remove'>Remove</button>
+                <button className='contact-action' onClick={() => del(contact)}>
+                    Remove
+                </button>
             </div>
         );
     }
 }
-
-export type Props = $PropertyType<Contact, "props">;
-export type State = $PropertyType<Contact, "state">;
 
 export default Contact;
 

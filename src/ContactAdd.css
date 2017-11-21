@@ -1,0 +1,58 @@
+.contact {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 80px auto 40px;
+    grid-template-areas: "avatar detail action";
+    align-items: stretch;
+    justify-items: stretch;
+}
+
+.contact-avatar {
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  grid-area: avatar;
+}
+
+.contact-avatar-dot {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: green;
+    padding: 10px;
+}
+.contact-details-add {
+}
+
+.contact-details-add p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.contact-details-add p input {
+    width: 100%;
+    font-size: medium;
+    border: none;
+}
+
+.contact-details-add p input:focus {
+    outline: none;
+}
+
+.contact-add {
+    border: 1px solid lightgrey;
+    background-color: white;
+    padding: 5px;
+}
+
+.contact-action-plus {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

@@ -12,33 +12,68 @@
     background: white;
 }
 
-.contact-list-search {
-    margin: 0px;    
-    padding: 0 20px;    
-    background: white;
+.contact-list-top {
     width: 100%;
-    border-width: 0px;
-    line-height: 46px;
-    font-size: 2em;
-    font-size: 700;        
+    top: 0;
+    border-bottom: 1px solid #d5d8df;
+    display: grid;
+    grid-template-columns: auto 73px;
+    grid-template-areas: "input add";
 }
 
-.contact-list-search:focus {
+.contact-list-middle {
+    margin: 20px 5px 20px 5px;
+}
+
+.add-contact {
+    display: block;
+    border: none;
+    grid-area: add;
+    width: 73px;
+    background: white;
+    background-image: url('./icons/person-add.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 28px;
+    font-size: 0;
+}
+
+.add-contact:focus {
     outline: none;
 }
 
-.contact-list-info {
-    color: grey;
+.search-contacts {
     width: 100%;
-    margin: 0px;    
-    padding: 0px;
-    background: white;
+    grid-area: input;
+    padding: 20px 20px 20px 60px;
+    background-image: url('./icons/search.svg');
+    background-repeat: no-repeat;
+    background-position: 20px center;
+    background-size: 1.2em;
+    font-size: 1.2em;
+    border: 0;
+    outline: none;
+}
+
+.showing-contacts {
     text-align: center;
+    margin: 20px 0;
+}
+
+.showing-contacts button {
+    color: blue;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
 }
 
 @media (min-width: 600px) {
     .contact-list-item {
         margin: 20px;
-        /* border-radius: 4px; */
+    }
+
+    .contact-list-middle {
+        margin: 20px;
     }
 }

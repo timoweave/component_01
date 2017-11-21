@@ -2,7 +2,7 @@
     display: grid;
     width: 100%;
     grid-template-columns: 80px auto 40px;
-    grid-template-areas: "avatar detail remove";
+    grid-template-areas: "avatar detail action";
     align-items: stretch;
     justify-items: stretch;
 }
@@ -19,10 +19,9 @@
 
 .contact-details {
     padding-left: 20px;
-    padding-right: 20px;    
+    padding-right: 20px;
     border-left: 1px solid #eee;
     overflow: hidden;
-    /* justify-content: center; */
     grid-area: detail;
     justify-self: stretch;
 }
@@ -34,7 +33,7 @@
     text-overflow: ellipsis;
 }
 
-.contact-remove {
+.contact-action {
   padding-left: 20px;
   align-self: center;
   width: 32px;
@@ -48,5 +47,5 @@
   vertical-align: middle;
   cursor: pointer;
   outline: none;
-  grid-area: remove;
+  grid-area: action;
 }
