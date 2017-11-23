@@ -24,22 +24,31 @@
     background-color: green;
     padding: 10px;
 }
-.contact-details-add {
+
+.contact-avatar-input {
+    opacity: 0;
+    width: 73px;
+    height: 73px;
+    margin-top: -10px;
+    vertical-align: top;
 }
 
-.contact-details-add p {
+.contact-avatar-input:hover {
+    cursor: pointer;
+}
+
+.contact-details-add input {
+    display: block;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.contact-details-add p input {
     width: 100%;
     font-size: medium;
     border: none;
+    margin-bottom: 5px;
 }
 
-.contact-details-add p input:focus {
+.contact-details-add input:focus {
     outline: none;
 }
 

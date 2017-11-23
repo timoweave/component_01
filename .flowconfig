@@ -2,6 +2,7 @@
 .*/node_modules/.*
 .*/src/registerServiceWorker.js
 .*/test/.*
+.*/src/ContactImage.js
 
 [include]
 
@@ -11,4 +12,3 @@
 
 [options]
 all=true
-

@@ -13,12 +13,8 @@
 }
 
 .contact-list-top {
-    width: 100%;
-    top: 0;
     border-bottom: 1px solid #d5d8df;
-    display: grid;
-    grid-template-columns: auto 73px;
-    grid-template-areas: "input add";
+    width: 100%;
 }
 
 .contact-list-middle {
@@ -26,16 +22,19 @@
 }
 
 .add-contact {
-    display: block;
-    border: none;
-    grid-area: add;
-    width: 73px;
-    background: white;
     background-image: url('./icons/person-add.svg');
-    background-repeat: no-repeat;
+    background-color: white;    
     background-position: center;
+    background-repeat: no-repeat;
     background-size: 28px;
-    font-size: 0;
+    border: none;
+    display: inline-block;
+    font-size: 1.2em;
+    width: 73px;
+    height: 73px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
 }
 
 .add-contact:focus {
@@ -43,14 +42,16 @@
 }
 
 .search-contacts {
-    width: 100%;
-    grid-area: input;
+    width: calc(100% - 73px);
+    height: 73px;
     padding: 20px 20px 20px 60px;
     background-image: url('./icons/search.svg');
     background-repeat: no-repeat;
     background-position: 20px center;
     background-size: 1.2em;
+    background-color: white;    
     font-size: 1.2em;
+    display: inline-block;
     border: 0;
     outline: none;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter} from 'react-router-dom';
 import App from './App';
 import './index.css';
 
@@ -11,8 +12,12 @@ function index(): void {
         (root && !(root instanceof HTMLElement))) {
         throw new Error("Expected a 'root' identifier element.");
     }
-
-    ReactDOM.render(<App/>, root);
+    const app  = (
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
+    );
+    ReactDOM.render(app, root);
 }
 
 index();

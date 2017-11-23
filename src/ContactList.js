@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {Route, Link} from 'react-router-dom';
 import Contact from './Contact';
 import ContactAdd from './ContactAdd';
 import sortBy from 'sort-by';
@@ -17,24 +18,23 @@ export type Props = {
 
 export type State = {
     query: string,
-    add: boolean,
     contact: ContactItem,
 };
 
 class ContactList extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
-        this.state = {query: "", add: false, contact: defaultContactItem};
+        this.state = {query: "", contact: defaultContactItem};
     }
 
-    look = (event:*): void => {
-        this.setState({query: event.target.value.trim()});
+    look = (event: *): void => {
+        const query = event.target.value;
+        this.setState({query});
     }
 
     match = (contact: ContactItem): boolean => {
         let {query} = this.state;
         let {name, email} = contact;
-        console.log({contact});
         query = query.toLowerCase();
         name = name.toLowerCase();
         email = email.toLowerCase();
@@ -47,10 +47,6 @@ class ContactList extends Component<Props, State> {
             pattern.test(contact.name);
     }
 
-    toggle = (): void => {
-        this.setState((previous) => ({...previous, add: !previous.add}));
-    }
-
     fill = (contact: ContactItem): void => {
         this.setState({...this.state, contact: contact});
     }
@@ -59,7 +55,7 @@ class ContactList extends Component<Props, State> {
         this.setState({contact: defaultContactItem});
     }
 
-    submit = (): void => {
+    submit = (history:*): void => {
         const {contact} = this.state;
         const {name, email} = contact;
         const validated = (name && name.length && email && email.length);
@@ -67,29 +63,28 @@ class ContactList extends Component<Props, State> {
             this.props.add(contact);
             this.clear();
         }
-        this.toggle();
+        history.goBack();
     }
 
     render(): Element<'div'> {
+        const {query, contact} = this.state;
         const {contacts: origin_contacts} = this.props;
-        const {add, query, contact} = this.state;
-        const contacts = origin_contacts.filter(this.match)
+        const contacts = origin_contacts.filter(this.match);
         return (
             <div className='contact-list-root'>
                 <div className='contact-list-top'>
-                    <input value={query} placeholder="Search"
+                    <input placeholder="Search" value={query}
                            onChange={this.look} className="search-contacts"/>
-                    <button onClick={this.toggle} className="add-contact"/>
+                    <Link to="/add" className="add-contact"/>
                 </div>
                 <div className='contact-list-middle'>
                     {(contacts.length === origin_contacts.length)
                      ? null
-                     : `${contacts.length}/${origin_contacts.length} contacts is shown`
-                    }
-                    {add === false
-                     ? null
-                     : <ContactAdd contact={contact} fill={this.fill}
-                                   submit={this.submit}/>}
+                     : `${contacts.length}/${origin_contacts.length} contacts is shown`}
+                    <Route exact path="/add" render={({history}) => (
+                        <ContactAdd contact={contact} fill={this.fill}
+                                    submit={() => this.submit(history)}/>
+                    )}/>
                 </div>
                 <ol className='contact-list'>
                     {contacts

@@ -22,14 +22,12 @@ class App extends Component<Props, State> {
     };
 
     delContact: ContactCall = (contact: ContactItem): void => {
-        console.log({delete: contact});
         remove(contact).then(() => this.setState((previous_state) => ({
             contacts: previous_state.contacts.filter((contact_i) => contact_i.id !== contact.id)
         })));
     }
 
     addContact: ContactCall = (contact: ContactItem): void => {
-        console.log({create: contact});
         create(contact).then(() => this.setState((previous_state) => ({
             contacts: [...previous_state.contacts, contact],
         })));
@@ -48,7 +46,7 @@ class App extends Component<Props, State> {
         return (
            <div className="root">
                 <ContactList contacts={contacts} add={this.addContact} del={this.delContact}/>
-            </div>
+           </div>
         );
     }
 }
