@@ -4,7 +4,7 @@ import Contact from './Contact';
 import ContactAdd from './ContactAdd';
 import sortBy from 'sort-by';
 import EscRegExp from 'escape-string-regexp';
-import defaultContactItem from './ContactTypes';
+import {defaultContactItem} from './ContactTypes';
 import "./ContactList.css";
 
 import type {Element} from 'react';
@@ -60,6 +60,7 @@ class ContactList extends Component<Props, State> {
         const {name, email} = contact;
         const validated = (name && name.length && email && email.length);
         if (validated) {
+            console.log({add: contact});
             this.props.add(contact);
             this.clear();
         }

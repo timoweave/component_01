@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
+import axios from 'axios';
+import {savePhoto} from './ContactApi';
+import {defaultContactItem} from './ContactTypes';
+import './ContactAdd.css';
+
 import type {Element} from 'react';
 import type {ContactItem, ContactCall} from './ContactTypes';
-import {savePhoto} from './ContactApi';
-import './ContactAdd.css';
 
 export type Props = {
     contact: ContactItem,
@@ -11,53 +14,89 @@ export type Props = {
 };
 
 export type State = {
+    file: ?File,
+    file_reader: ?FileReader,
     selectAvatarURL:  string,
     defaultAvatarURL:  string,
 };
 
 class ContactAdd extends Component<Props, State> {
     state = {
-        defaultAvatarURL: "http://localhost:5001/profile_photo.jpg",
+        file: null,
+        file_reader: null,
         selectAvatarURL: "",
+        defaultAvatarURL: "http://localhost:5001/profile_photo.jpg",
     };
-    
-    changeName = (event: SyntheticInputEvent<HTMLInputElement>): void => {
+
+    fillName = (event: SyntheticInputEvent<HTMLInputElement>): void => {
         this.props.fill({...this.props.contact, name: event.target.value});
     }
 
-    changeEmail = (event: SyntheticInputEvent<HTMLInputElement>): void => {
+    fillEmail = (event: SyntheticInputEvent<HTMLInputElement>): void => {
         this.props.fill({...this.props.contact, email: event.target.value});
     };
 
+    fillAvatar = (address: string): void => {
+        this.props.fill({...this.props.contact, avatarURL: address});
+    };
+
     changeImage = async (event: SyntheticInputEvent<HTMLInputElement>): Promise<*> => {
-        const file = event.target.files[0]
+        const {files} = event.target;
+        if (files === null || files === undefined || files.length === 0) {
+            return;
+        }
+        const [file] = files;
         if (file === null || file === undefined || !file.type.match(/^image\//)) {
-            this.props.fill({...this.props.contact, avatarURL: ''});
-            return Promise.resolve(false);
-        } 
-        const dataURL = await this.readImageAsDataURL(file);
-        this.setState({selectAvatarURL: dataURL, });
-        this.props.fill({...this.props.contact, avatarURL: `http://localhost:5001/${file.name}`});
-        savePhoto(file.name, dataURL);
-        return Promise.resolve(true);
+            return;
+        }
+        const file_reader = new FileReader();
+        file_reader.onload = this.showImage(file, file_reader);
+        file_reader.readAsDataURL(file);
     };
-    
-    readImageAsDataURL = async (file: *): Promise<*> => {
-        const answer = await new Promise((resolve) => {
-            const reader = new FileReader()
-            reader.onload = (event) => {
-                resolve(event.target.result)
-            }
-            reader.readAsDataURL(file)
+
+    showImage = (file: *, file_reader: FileReader) => (loaded: *): void => {
+        this.fillAvatar(this.avatarURL(file.name));
+        this.setState({selectAvatarURL: file_reader.result, file, file_reader});
+    }
+
+    saveImage = (): Promise<*> => {
+        const {file, file_reader} = this.state;
+        const form = new FormData();
+        form.append('avatar', file);
+        return axios({
+            url: this.avatarURL('uploads'),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': 'whatever-you-want',
+            },
+            data: form,
+        }).then((response) => {
+            const saved_avatar_url = this.avatarURL(file.name);
+            const contact = {...this.props.contact, avatarURL: saved_avatar_url}
+            console.log({response, contact, file, avatar_url: file_reader.result});
+            this.fillAvatar(saved_avatar_url);
+        }).catch((error) => {
+            console.log({error});
         });
-        return answer;
     };
+
+    submit = (event): void => {
+        this.saveImage().then(() => {
+            console.log({saved_contact: this.props.contact});
+            this.props.submit(event);
+            this.props.fill(defaultContactItem);
+        })
+    };
+
+    avatarURL = (name: string): string => `http://localhost:5001/${name}`;
 
     render(): Element<'div'> {
         const {contact} = this.props;
         const {id, name, email, avatarURL} = contact;
         const {selectAvatarURL, defaultAvatarURL} = this.state;
-        const displayAvatarURL = avatarURL || selectAvatarURL || defaultAvatarURL;
+        const displayAvatarURL = selectAvatarURL || avatarURL || defaultAvatarURL;
+        console.log({selectAvatarURL, defaultAvatarURL, displayAvatarURL, avatarURL});
         const styles = {backgroundImage: `url(${displayAvatarURL})`};
         return (
             <div className='contact contact-add'>
@@ -67,11 +106,11 @@ class ContactAdd extends Component<Props, State> {
                 </div>
                 <div className='contact-details contact-details-add'>
                     <input placeholder="Full Name" value={name}
-                           onChange={this.changeName}/>
+                           onChange={this.fillName}/>
                     <input placeholder="Email Address"  value={email}
-                           onChange={this.changeEmail}/>
+                           onChange={this.fillEmail}/>
                 </div>
-                <button className='contact-action contact-action-plus' onClick={this.props.submit}>
+                <button className='contact-action contact-action-plus' onClick={this.submit}>
                    add
                 </button>
             </div>

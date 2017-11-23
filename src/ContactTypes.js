@@ -17,4 +17,6 @@ export type ContactArray = Array<ContactItem>;
 
 export type ContactCall = (contact: ContactItem) => void;
 
-export default defaultContactItem;
+module.exports = {
+    defaultContactItem,
+};
